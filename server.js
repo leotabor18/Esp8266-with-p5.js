@@ -8,20 +8,11 @@ console.log("Connected!");
 
 app.use(express.static('public'));
 
-// app.get('/level/:data', function (req, res){
-    
-//     let d = req.params.data;
-//     console.log(d);
-    socketIo.sockets.on('connection', socket => {
-        console.log("Connected: "+socket.id);
-        // socket.on('message1', data => {
-        //     console.log(data);
-            
-            socket.emit('sendData' , "Hello client");
-            socket.on('message', data => {
-                console.log(data);
-                socket.broadcast.emit('result' , data);
-            });
-        });
-        
-    // });
+socketIo.sockets.on('connection', socket => {
+    console.log("Connected: "+socket.id);
+    socket.emit('sendData' , "Connected to server");
+    socket.on('message', data => {
+        console.log(data);
+        socket.broadcast.emit('result' , data);
+    });
+});
